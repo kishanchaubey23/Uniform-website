@@ -23,6 +23,7 @@ export const viewport = {
 }
 
 import Script from 'next/script'
+import NextTopLoader from 'nextjs-toploader';
 
 export default function RootLayout({
   children,
@@ -31,7 +32,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="font-sans antialiased" suppressHydrationWarning>
+      <body className="font-sans antialiased bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 animate-gradient-bg text-white min-h-screen" suppressHydrationWarning>
+        <NextTopLoader color="#ffffff" showSpinner={false} height={3} shadow="0 0 10px #ffffff,0 0 5px #ffffff" />
         <CartProvider>{children}</CartProvider>
         <Script id="razorpay-checkout-js" src="https://checkout.razorpay.com/v1/checkout.js" />
       </body>

@@ -38,8 +38,9 @@ export default function SignupPage() {
     <div className="flex min-h-screen flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-muted/40 font-sans">
       <div className="w-full max-w-md space-y-8 bg-background p-8 rounded-xl shadow-sm border border-border">
         <div className="text-center">
-          <Link href="/" className="font-serif text-3xl font-bold tracking-tight text-foreground">
-            MK Creations
+          <Link href="/" className="flex justify-center items-center gap-2 font-serif text-3xl font-bold tracking-tight text-foreground">
+            <img src="/logo.png" alt="MK Creations Logo" className="h-10 w-auto object-contain" />
+            <span className="hidden sm:inline-block">MK Creations</span>
           </Link>
           <h2 className="mt-6 text-2xl font-bold tracking-tight text-foreground">
             Create an account

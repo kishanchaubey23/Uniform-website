@@ -8,11 +8,23 @@ CREATE TABLE IF NOT EXISTS products (
   details JSONB NOT NULL DEFAULT '[]',
   sizes JSONB NOT NULL DEFAULT '[]',
   image TEXT NOT NULL,
-  badge TEXT
+  badge TEXT,
+  stock INT NOT NULL DEFAULT 0,
+  sold INT NOT NULL DEFAULT 0,
+  returns INT NOT NULL DEFAULT 0,
+  exchanged INT NOT NULL DEFAULT 0
 );
 
--- Note: To seed the original products, you can run an INSERT command. 
--- For now, they will just exist in the DB completely empty until you add them via the Admin panel.
+-- Note: To seed the original products, you can run an INSERT command.
+
+-- Create the schools table
+CREATE TABLE IF NOT EXISTS schools (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  name TEXT NOT NULL,
+  description TEXT,
+  image TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
 
 -- Create the orders table
 CREATE TABLE IF NOT EXISTS orders (
@@ -54,4 +66,13 @@ CREATE POLICY "Enable all for authenticated users" ON orders
 CREATE POLICY "Enable insert for unauthenticated users" ON orders 
   FOR INSERT WITH CHECK (true);
 
- 
+-- Schools RLS
+ALTER TABLE schools ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Enable read access for all users" ON schools;
+DROP POLICY IF EXISTS "Enable all for authenticated users" ON schools;
+
+CREATE POLICY "Enable read access for all users" ON schools
+  FOR SELECT USING (true);
+
+CREATE POLICY "Enable all for authenticated users" ON schools
+  FOR ALL TO authenticated USING (true);
