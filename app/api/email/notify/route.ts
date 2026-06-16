@@ -2,7 +2,8 @@ import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import OrderStatusEmail from '@/components/emails/order-status';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+
+const resend = new Resend(process.env.RESEND_API_KEY || 're_dummy_key_to_prevent_startup_crash');
 
 export async function POST(req: Request) {
   try {
@@ -18,7 +19,6 @@ export async function POST(req: Request) {
 
     if (!process.env.RESEND_API_KEY) {
        console.error("RESEND_API_KEY is missing. Mocking email send for development.");
-       // In dev without keys, we just pretend it worked so it doesn't break checkout testing
        return NextResponse.json({ success: true, mocked: true });
     }
 

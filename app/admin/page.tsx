@@ -23,15 +23,18 @@ export default async function AdminPage() {
   // Using an elegant fallback if tables don't exist yet so the page doesn't crash
   let products = [];
   let orders = [];
+  let schools = [];
   let revenue = 0;
 
   try {
-    const [{ data: pData }, { data: oData }] = await Promise.all([
+    const [{ data: pData }, { data: oData }, { data: sData }] = await Promise.all([
       supabase.from("products").select("*").order("name"),
       supabase.from("orders").select("*").order("created_at", { ascending: false }),
+      supabase.from("schools").select("*").order("name"),
     ]);
     
     if (pData) products = pData;
+    if (sData) schools = sData;
     if (oData) {
       orders = oData;
       revenue = orders.reduce((sum, order) => sum + Number(order.total), 0);
@@ -50,7 +53,7 @@ export default async function AdminPage() {
         </div>
         
         {/* Pass initial data to a client component for interactivity */}
-        <AdminDashboard initialProducts={products} initialOrders={orders} totalRevenue={revenue} />
+        <AdminDashboard initialProducts={products} initialOrders={orders} initialSchools={schools} totalRevenue={revenue} />
       </div>
       <Footer />
     </main>
